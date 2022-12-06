@@ -68,5 +68,4 @@ runs:
       env:
         output: "${{ steps.validate.outputs.output }}"
         session: ${{ inputs.session }}
-        url: >
-          https://adventofcode.com/${{ steps.validate.outputs.year }}/day/${{ steps.validate.outputs.day }}/input
+        url: https://adventofcode.com/${{ steps.validate.outputs.year }}/day/${{ steps.validate.outputs.day }}/input
