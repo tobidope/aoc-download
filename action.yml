@@ -43,8 +43,8 @@ runs:
           exit 1
         fi
 
-        output=${output//\$year/year}
-        output=${output//\$day/day}
+        output=${output//\$year/$year}
+        output=${output//\$day/$day}
 
         echo "year=$year" >> "$GITHUB_OUTPUT"
         echo "day=$day" >> "$GITHUB_OUTPUT"
