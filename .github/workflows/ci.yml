@@ -19,7 +19,7 @@ jobs:
         with:
           year: 2022
           day: 1
-          session: ${{ secret.AOC_SESSION }}
+          session: ${{ secrets.AOC_SESSION }}
       - uses: actions/upload-artifact@v3
         with:
           name: test
