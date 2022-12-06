@@ -28,7 +28,7 @@ runs:
           echo "::error ::session cookie must be set"
           exit 1
         fi
-        #echo "::add-mask:$session"
+        echo "::add-mask:$session"
 
         current_year=$(date +%Y)
         current_month=$(date +%m)
