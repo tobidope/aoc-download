@@ -1,0 +1,21 @@
+name: aoc download
+description: Download puzzle input from Advent of Code (https://adventofcode.com/)
+author: Tobias Bell
+inputs:
+  year:
+    description: For which year to download (default current year)
+    required: false
+  day:
+    description: For which day to download (default current day)
+    required: false
+  output:
+    description: |
+      Path where the puzzle input will be stored. Can be templated with the variables
+      $day and $year. For year 2015, day 01 and output_path "$year/day$day" you get 2015/day01
+    required: false
+    default: day$day
+runs:
+  using: composite
+  steps:
+    - run: echo ${{ inputs.year }} ${{ inputs.day }} ${{ inputs.ouput }}
+      shell: bash
