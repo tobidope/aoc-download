@@ -61,12 +61,12 @@ runs:
         curl --proto '=https' --tlsv1.2 \
           --retry 3 --retry-connrefused \
           --cookie "session=$session" \
-          --user-agent github.com/tobidope/aoc-download \
+          --user-agent "github.com/tobidope/aoc-download" \
           --fail --silent --show-error \
           --location --output "$output" "$url"
       shell: bash
       env:
-        output: "${{ steps.validate.output.output }}"
+        output: "${{ steps.validate.outputs.output }}"
         session: ${{ inputs.session }}
         url: >
-          https://adventofcode.com/${{ steps.validate.output.year }}/day/${{ steps.validate.output.day }}
+          https://adventofcode.com/${{ steps.validate.outputs.year }}/day/${{ steps.validate.outputs.day }}
