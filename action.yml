@@ -22,7 +22,7 @@ runs:
   steps:
     - id: validate
       run: |
-        if [[ -z "$session"]]; then
+        if [[ -z "$session" ]]; then
           echo "::error ::session cookie must be set"
           exit 1
         fi
@@ -30,11 +30,11 @@ runs:
 
         current_year=$(date +%Y)
         current_month=$(date +%m)
-        if [[ -z "$year"]]; then
+        if [[ -z "$year" ]]; then
           year=$(date +%Y)
         fi
 
-        if [[ -z "$day"]]; then
+        if [[ -z "$day" ]]; then
           day=$(date +%d)
         fi
 
