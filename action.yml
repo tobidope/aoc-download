@@ -59,7 +59,11 @@ runs:
         output: ${{ inputs.output }}
     - id: download
       name: Download puzzle input
-      run: curl --proto '=https' --tlsv1.2  --retry 3 --retry-connrefused --cookie "session=$session" --user-agent "github.com/tobidope/aoc-download" --fail --silent --show-error --location --output "$output" "$url"
+      run: |
+        echo "url [$url]"
+        echo "output [$output]"
+        echo "session [$session]"
+        curl --proto '=https' --tlsv1.2  --retry 3 --retry-connrefused --cookie "session=$session" --user-agent "github.com/tobidope/aoc-download" --fail --silent --show-error --location --output "$output" "$url"
       shell: bash
       env:
         output: "${{ steps.validate.outputs.output }}"
