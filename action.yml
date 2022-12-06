@@ -58,7 +58,7 @@ runs:
         output: ${{ inputs.output }}
     - id: download
       run: |
-        curl --proto '=https' --tlsv1.2 \
+        curl --verbose --proto '=https' --tlsv1.2 \
           --retry 3 --retry-connrefused \
           --cookie "session=$session" \
           --user-agent "github.com/tobidope/aoc-download" \
@@ -69,4 +69,4 @@ runs:
         output: "${{ steps.validate.outputs.output }}"
         session: ${{ inputs.session }}
         url: >
-          https://adventofcode.com/${{ steps.validate.outputs.year }}/day/${{ steps.validate.outputs.day }}
+          https://adventofcode.com/${{ steps.validate.outputs.year }}/day/${{ steps.validate.outputs.day }}/input
