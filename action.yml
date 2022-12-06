@@ -21,6 +21,7 @@ runs:
   using: composite
   steps:
     - id: validate
+      name: Validate input data
       run: |
         if [[ -z "$session" ]]; then
           echo "::error ::session cookie must be set"
@@ -57,13 +58,14 @@ runs:
         day: ${{ inputs.day }}
         output: ${{ inputs.output }}
     - id: download
-      run: |
-        curl --verbose --proto '=https' --tlsv1.2 \
-          --retry 3 --retry-connrefused \
-          --cookie "session=$session" \
-          --user-agent "github.com/tobidope/aoc-download" \
-          --fail --silent --show-error \
-          --location --output "$output" "$url"
+      name: Download puzzle input
+      run: >
+        curl --verbose --proto '=https' --tlsv1.2 
+        --retry 3 --retry-connrefused 
+        --cookie "session=$session" 
+        --user-agent "github.com/tobidope/aoc-download" 
+        --fail --silent --show-error 
+        --location --output "$output" "$url"
       shell: bash
       env:
         output: "${{ steps.validate.outputs.output }}"
