@@ -49,14 +49,13 @@ runs:
         echo "year=$year" >> "$GITHUB_OUTPUT"
         echo "day=$day" >> "$GITHUB_OUTPUT"
         echo "output=$output" >> "$GITHUB_OUTPUT"
-        echo "session=$session" >> "$GITHUB_OUTPUT"
       shell: bash
       env:
         TZ: EST
-        session: ${{ input.session }}
-        year: ${{ input.year }}
-        day: ${{ input.day }}
-        output: ${{ input.output }}
+        session: ${{ inputs.session }}
+        year: ${{ inputs.year }}
+        day: ${{ inputs.day }}
+        output: ${{ inputs.output }}
     - id: download
       run: |
         curl --proto '=https' --tlsv1.2 \
@@ -68,6 +67,6 @@ runs:
       shell: bash
       env:
         output: "${{ steps.validate.output.output }}"
-        session: ${{ steps.validate.output.session }}
+        session: ${{ inputs.session }}
         url: >
           https://adventofcode.com/${{ steps.validate.output.year }}/day/${{ steps.validate.output.day }}
