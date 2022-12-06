@@ -23,6 +23,7 @@ runs:
     - id: validate
       name: Validate input data
       run: |
+        : Validating input data
         if [[ -z "$session" ]]; then
           echo "::error ::session cookie must be set"
           exit 1
@@ -60,10 +61,16 @@ runs:
     - id: download
       name: Download puzzle input
       run: |
+        : Loading puzzle
         echo "url [$url]"
         echo "output [$output]"
         echo "session [$session]"
-        curl --proto '=https' --tlsv1.2  --retry 3 --retry-connrefused --cookie "session=$session" --user-agent "github.com/tobidope/aoc-download" --fail --silent --show-error --location --output "$output" "$url"
+        curl -verbose --proto '=https' --tlsv1.2 \
+          --retry 3 --retry-connrefused \
+          --cookie "session=$session" \
+          --user-agent "github.com/tobidope/aoc-download" \
+          --fail --silent --show-error --location \
+          --output "$output" "$url"
       shell: bash
       env:
         output: "${{ steps.validate.outputs.output }}"
