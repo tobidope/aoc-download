@@ -60,7 +60,7 @@ runs:
       run: |
         curl --proto '=https' --tlsv1.2 \
           --retry 3 --retry-connrefused \
-          --cookie "session=$session"
+          --cookie "session=$session" \
           --user-agent github.com/tobidope/aoc-download \
           --fail --silent --show-error \
           --location --output "$output" "$url"
