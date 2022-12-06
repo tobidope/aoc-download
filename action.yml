@@ -20,5 +20,54 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: echo ${{ inputs.year }} ${{ inputs.day }} ${{ inputs.ouput }}
+    - id: validate
+      run: |
+        if [[ -z "$session"]]; then
+          echo "::error ::session cookie must be set"
+          exit 1
+        fi
+        echo "::add-mask:$session"
+
+        current_year=$(date +%Y)
+        current_month=$(date +%m)
+        if [[ -z "$year"]]; then
+          year=$(date +%Y)
+        fi
+
+        if [[ -z "$day"]]; then
+          day=$(date +%d)
+        fi
+
+        if [[ "$year" -eq "$current_year" && "$current_month" -ne 12 ]]; then
+          echo "::error ::downloads in the future ($year-$month-$day) are not possible"
+          exit 1
+        fi
+
+        output=${output//\$year/year}
+        output=${output//\$day/day}
+
+        echo "year=$year" >> "$GITHUB_OUTPUT"
+        echo "day=$day" >> "$GITHUB_OUTPUT"
+        echo "output=$output" >> "$GITHUB_OUTPUT"
+        echo "session=$session" >> "$GITHUB_OUTPUT"
       shell: bash
+      env:
+        TZ: EST
+        session: ${{ input.session }}
+        year: ${{ input.year }}
+        day: ${{ input.day }}
+        output: ${{ input.output }}
+    - id: download
+      run: |
+        curl --proto '=https' --tlsv1.2 \
+          --retry 3 --retry-connrefused \
+          --cookie "session=$session"
+          --user-agent github.com/tobidope/aoc-download \
+          --fail --silent --show-error \
+          --location --output "$output" "$url"
+      shell: bash
+      env:
+        output: "${{ steps.validate.output.output }}"
+        session: ${{ steps.validate.output.session }}
+        url: >
+          https://adventofcode.com/${{ steps.validate.output.year }}/day/${{ steps.validate.output.day }}
