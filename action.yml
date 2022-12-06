@@ -62,10 +62,7 @@ runs:
       name: Download puzzle input
       run: |
         : Loading puzzle
-        echo "url [$url]"
-        echo "output [$output]"
-        echo "session [$session]"
-        curl -verbose --proto '=https' --tlsv1.2 \
+        curl --proto '=https' --tlsv1.2 \
           --retry 3 --retry-connrefused \
           --cookie "session=$session" \
           --user-agent "github.com/tobidope/aoc-download" \
